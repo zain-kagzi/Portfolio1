@@ -71,13 +71,13 @@ const portfolioData = {
     { name: "GitHub", icon: "🐙" },
   ],
   projects: [
-    {
-      title: "Restaurant Management System",
-      tags: ["UI/UX", "Design", "PHP", "AJAX"],
-      color: "#7c6af1",
-      image: "img/project1.png",
-      url: "https://restauranters.infinityfree.me/",
-    },
+    // {
+    //   title: "Restaurant Management System",
+    //   tags: ["UI/UX", "Design", "PHP", "AJAX"],
+    //   color: "#7c6af1",
+    //   image: "img/project1.png",
+    //   url: "https://restauranters.infinityfree.me/",
+    // },
     {
       title: "Responsive Car Project",
       tags: ["HTML", "Tailwind CSS", "JavaScript"],
