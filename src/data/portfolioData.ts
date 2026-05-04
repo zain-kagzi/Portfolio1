@@ -71,13 +71,20 @@ const portfolioData = {
     { name: "GitHub", icon: "🐙" },
   ],
   projects: [
-    // {
-    //   title: "Restaurant Management System",
-    //   tags: ["UI/UX", "Design", "PHP", "AJAX"],
-    //   color: "#7c6af1",
-    //   image: "img/project1.png",
-    //   url: "https://restauranters.infinityfree.me/",
-    // },
+    {
+  title: "Real-Time Chat Application",
+  tags: ["React", "Node.js", "Socket.io", "MongoDB"],
+  color: "#4ade80",
+  image: "https://files.ably.io/ghost/prod/2023/01/build-a-realtime-chat-app-from-scratch--1-.png",
+  url: "https://chat-app-theta-azure-39.vercel.app/"
+    },
+    {
+      title: "Restaurant Management System",
+      tags: ["UI/UX", "Design", "PHP", "AJAX"],
+      color: "#7c6af1",
+      image: "img/project1.png",
+      url: "https://restauranters.infinityfree.me/",
+    },
     {
       title: "Responsive Car Project",
       tags: ["HTML", "Tailwind CSS", "JavaScript"],
