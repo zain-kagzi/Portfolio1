@@ -37,7 +37,7 @@ const About = () => {
             mb-2!
             font-display
           ">
-            BEST FULL STACK
+            FULL STACK
             <br /> DEVELOPER
           </h2>
 
