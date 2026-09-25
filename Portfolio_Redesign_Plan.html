@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio Redesign Plan & Technical Analysis - Zainuddin Sharf Kagzi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --surface: #12151b;
+      --surface-elevated: #181d26;
+      --border: #242b38;
+      --border-subtle: #1c222c;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #c8f135;
+      --accent-glow: rgba(200, 241, 53, 0.15);
+      --accent-dark: #000000;
+      --success: #22c55e;
+      --info: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0b0d10;
+      color: #f1f5f9;
+      line-height: 1.6;
+      font-size: 13.5px;
+      -webkit-font-smoothing: antialiased;
+      padding: 30px;
+    }
+
+    .document-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Header & Title */
+    .doc-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 28px;
+      margin-bottom: 32px;
+    }
+
+    .badge-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(200, 241, 53, 0.1);
+      border: 1px solid rgba(200, 241, 53, 0.25);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .badge.secondary {
+      background: rgba(148, 163, 184, 0.08);
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+
+    h1.doc-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .doc-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 700px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+      background: var(--surface-elevated);
+      padding: 16px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .meta-item .meta-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .meta-item .meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Section Styling */
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      font-size: 13.5px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin-bottom: 16px;
+      background: var(--surface-elevated);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    th {
+      background: #1c222c;
+      color: #f8fafc;
+      font-weight: 700;
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    td strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Cards & Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .card.highlight {
+      border-color: rgba(200, 241, 53, 0.3);
+      background: linear-gradient(145deg, rgba(200, 241, 53, 0.04), rgba(24, 29, 38, 0.8));
+    }
+
+    .card h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card p {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Lists */
+    ul.check-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.check-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    ul.check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    /* Code & Tokens */
+    .token-box {
+      background: #08090a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .token-box .accent {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .color-chip-group {
+      display: flex;
+      gap: 12px;
+      margin: 12px 0 16px;
+      flex-wrap: wrap;
+    }
+
+    .color-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-elevated);
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .color-preview {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Roadmap Timeline */
+    .timeline {
+      position: relative;
+      border-left: 2px solid var(--border);
+      padding-left: 20px;
+      margin-left: 8px;
+    }
+
+    .timeline-step {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-step::before {
+      content: "";
+      position: absolute;
+      left: -27px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(200, 241, 53, 0.6);
+    }
+
+    .timeline-step h4 {
+      font-size: 13.5px;
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .timeline-step p {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+
+    /* Callout */
+    .callout {
+      background: rgba(200, 241, 53, 0.05);
+      border: 1px solid rgba(200, 241, 53, 0.25);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      color: #e2e8f0;
+      font-size: 12.5px;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Page Breaks for Print / PDF */
+    @media print {
+      body {
+        background: #0b0d10 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 0 !important;
+      }
+
+      .document-container {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      .page-break {
+        page-break-before: always;
+        break-before: page;
+        padding-top: 24px;
+      }
+
+      .no-break {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="document-container">
+    
+    <!-- HEADER -->
+    <header class="doc-header">
+      <div class="badge-bar">
+        <span class="badge">✦ Architectural Specification</span>
+        <span class="badge secondary">UI/UX Pro Max Certified</span>
+        <span class="badge secondary">21st.dev MCP Integration</span>
+      </div>
+      <h1 class="doc-title">Cinematic Developer Portfolio Redesign</h1>
+      <p class="doc-subtitle">Comprehensive Codebase Analysis, Design System Architecture, Component Audit &amp; Step-by-Step Implementation Roadmap for Zainuddin Sharf Kagzi.</p>
+      
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-label">Developer</div>
+          <div class="meta-value">Zain Kagzi</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Primary Stack</div>
+          <div class="meta-value">React 19 + Tailwind v4</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Design Style</div>
+          <div class="meta-value">OLED Dark / Minimalist</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Review Status</div>
+          <div class="meta-value" style="color: var(--accent);">Ready for Approval</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 1. TECHNOLOGY STACK -->
+    <section class="section no-break">
+      <h2 class="section-title">1. Current Technology Stack Analysis</h2>
+      <p class="section-desc">The portfolio is built on a clean modern foundation that will be maintained without breaking changes or project restructuring.</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Layer</th>
+            <th style="width: 45%;">Detected Technologies &amp; Config</th>
+            <th style="width: 30%;">Assessment &amp; Compatibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core Engine</strong></td>
+            <td>React 19.2.5, Vite 8.0.9, TypeScript 6.0.2</td>
+            <td><span style="color: var(--accent);">✓ Excellent</span> (Cutting edge, fast builds)</td>
+          </tr>
+          <tr>
+            <td><strong>Styling Architecture</strong></td>
+            <td>Tailwind CSS v4.2.2 with @theme CSS variables</td>
+            <td><span style="color: var(--accent);">✓ Retain</span> (Streamline utility classes)</td>
+          </tr>
+          <tr>
+            <td><strong>Data &amp; State</strong></td>
+            <td>React Context (AppContext, context.ts, portfolioData.ts)</td>
+            <td><span style="color: var(--accent);">✓ Preserve 100%</span> of real personal content</td>
+          </tr>
+          <tr>
+            <td><strong>Integrations</strong></td>
+            <td>EmailJS (service_40391ok, template_p7xlq2i)</td>
+            <td><span style="color: var(--accent);">✓ Preserve</span> (Upgrade to in-UI feedback)</td>
+          </tr>
+          <tr>
+            <td><strong>Motion &amp; Observers</strong></td>
+            <td>Custom useReveal hook + basic CSS keyframes</td>
+            <td><span style="color: var(--accent);">✓ Upgrade</span> (Add reduced-motion, micro-interactions)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2. EXISTING COMPONENT AUDIT -->
+    <section class="section no-break">
+      <h2 class="section-title">2. Existing Pages &amp; Component Inventory</h2>
+      
+      <div class="grid-2">
+        <div class="card">
+          <h4>Navbar (Navbar.tsx)</h4>
+          <p>Fixed top navbar with scroll threshold trigger, anchor navigation, and full-screen mobile backdrop menu. Body scroll lock implemented.</p>
+        </div>
+        <div class="card">
+          <h4>Hero Section (Hero.tsx)</h4>
+          <p>Split 2-column layout with greeting badge, display typography, CV download CTA, floating circular avatar, and side rotated social bar.</p>
+        </div>
+        <div class="card">
+          <h4>About Section (About.tsx)</h4>
+          <p>Bio summary, abilities checklist with checkmarks, contact CTA button, and Unsplash stock laptop photography card with rotating star.</p>
+        </div>
+        <div class="card">
+          <h4>Projects (Projects.tsx)</h4>
+          <p>2-column card grid rendering 3 real projects (Restaurant Management, Responsive Car, Weather App) with tags and external links.</p>
+        </div>
+        <div class="card">
+          <h4>Services (Services.tsx)</h4>
+          <p>3x2 grid of 6 services (UI/UX, Frontend, Responsive, Performance, Component UI, Problem Solving) with emoji icons and radial glows.</p>
+        </div>
+        <div class="card">
+          <h4>Skills &amp; Tooling (Skills.tsx)</h4>
+          <p>Left 2x3 tool cards with emojis; right column with skill percentage progress bars (HTML 90%, CSS 85%, JS 80%, React 75%, APIs 70%).</p>
+        </div>
+        <div class="card">
+          <h4>Contact Console (Contact.tsx)</h4>
+          <p>5-field form with EmailJS integration submitting messages directly to Zain's email. Uses window.alert for feedback.</p>
+        </div>
+        <div class="card">
+          <h4>Footer (Newsletter.tsx)</h4>
+          <p>Clean bottom section housing verified social links (Instagram, LinkedIn, GitHub, Discord) and copyright notice.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- 3. CURRENT WEAKNESSES VS WHAT WILL BE IMPROVED -->
+    <section class="section no-break">
+      <h2 class="section-title">3. Critical Audit: Weaknesses &amp; Targeted Enhancements</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Area</th>
+            <th style="width: 35%;">Current State (Template Pitfall)</th>
+            <th style="width: 40%;">Cinematic Upgrade (UI/UX Pro Max Standard)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Iconography</strong></td>
+            <td>Emoji glyphs (🎨, 💻, ⚡, 🚀, ⚛️, 🟨, 💨, 🐙) used as structural icons.</td>
+            <td><strong>100% Vector SVG Icons</strong> with uniform 1.5px stroke and accessibility labels (`aria-hidden="true"`).</td>
+          </tr>
+          <tr>
+            <td><strong>Color Cohesion</strong></td>
+            <td>6+ disparate accent colors (#7c6af1, #f1c135, #35c6f1, etc.) scattered across cards.</td>
+            <td><strong>Single Sophisticated Accent</strong>: Cyber Electric Lime (#C8F135) with deep obsidian (#0B0D10) surfaces.</td>
+          </tr>
+          <tr>
+            <td><strong>Typography</strong></td>
+            <td>Syne paired with Caveat (informal cursive script) creating visual discord.</td>
+            <td><strong>High-Tech Editorial Pairing</strong>: Syne (tight bold headings) + DM Sans (body) + JetBrains Mono (tech badges).</td>
+          </tr>
+          <tr>
+            <td><strong>Interactivity</strong></td>
+            <td>Aggressive translate jumps on hover, repetitive card grids, raw browser alerts.</td>
+            <td><strong>Spotlight Cursor Luminescence</strong>, smooth border gradients, in-form success state machine.</td>
+          </tr>
+          <tr>
+            <td><strong>Visual Pacing</strong></td>
+            <td>Repetitive 2x3 &amp; 2x2 grids; stock laptop photo in About section.</td>
+            <td><strong>Asymmetrical Bento Rhythm</strong>: Authentic developer credentials, real code highlights, interactive metrics.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 4. WHAT CAN BE REUSED -->
+    <section class="section no-break">
+      <h2 class="section-title">4. Authenticity Guarantee: Content &amp; Data Preserved</h2>
+      <p class="section-desc">Per project requirements, no personal information will be invented and zero existing functionality will be lost.</p>
+      
+      <div class="grid-3">
+        <div class="card highlight">
+          <h4>👤 Real Identity</h4>
+          <p><strong>Zainuddin Sharf Kagzi</strong><br>Full Stack Developer &amp; UI/UX Specialist. Resume [cv.pdf] link intact.</p>
+        </div>
+        <div class="card highlight">
+          <h4>🚀 3 Live Projects</h4>
+          <p>Restaurant Management System (PHP/AJAX)<br>Responsive Car Project (HTML/Tailwind)<br>Weather Detector App (API)</p>
+        </div>
+        <div class="card highlight">
+          <h4>📬 Working Contact</h4>
+          <p>EmailJS integration with exact keys: Service <code>service_40391ok</code> &amp; Template <code>template_p7xlq2i</code>.</p>
+        </div>
+      </div>
+      
+      <ul class="check-list">
+        <li><strong>Verified Socials</strong>: Instagram (@zain_kagzi), LinkedIn (zain-kagzi), GitHub (zain-kagzi), Discord.</li>
+        <li><strong>Core Capabilities</strong>: UI/UX Design, Frontend Development, Responsive Layouts, Performance, Component Architecture.</li>
+        <li><strong>Technical Skills</strong>: React.js, JavaScript, Tailwind CSS, PHP, MySQL, REST APIs, Git &amp; GitHub.</li>
+      </ul>
+    </section>
+
+    <!-- 5. UI/UX PRO MAX SPECIFICATION -->
+    <section class="section no-break">
+      <h2 class="section-title">5. UI/UX Pro Max Design System Specification</h2>
+      
+      <div class="color-chip-group">
+        <div class="color-chip">
+          <div class="color-preview" style="background: #0B0D10;"></div>
+          <span>Canvas: #0B0D10</span>
+        </div>
+        <div class="color-chip">
+          <div class="color-preview" style="background: #12151B;"></div>
+          <span>Surface 1: #12151B</span>
+        </div>
+        <div class="color-chip">
+          <div class="color-preview" style="background: #181D26;"></div>
+          <span>Surface 2: #181D26</span>
+        </div>
+        <div class="color-chip">
+          <div class="color-preview" style="background: #C8F135;"></div>
+          <span style="color: var(--accent);">Accent: #C8F135</span>
+        </div>
+        <div class="color-chip">
+          <div class="color-preview" style="background: #FFFFFF;"></div>
+          <span>Text: #FFFFFF</span>
+        </div>
+      </div>
+
+      <div class="token-box">
+<span class="accent">/* Core Design Tokens (OLED Dark + Precision Engineering) */</span>
+--font-display   : 'Syne', sans-serif;             <span class="accent">/* Headings: 700/800, tight tracking -0.02em */</span>
+--font-body      : 'DM Sans', sans-serif;          <span class="accent">/* Body: 400/500, line-height 1.6 */</span>
+--font-mono      : 'JetBrains Mono', monospace;    <span class="accent">/* Code, tags, metrics */</span>
+--space-unit     : 8px;                            <span class="accent">/* Unified 8pt spatial grid (16, 24, 32, 48, 64, 96px) */</span>
+--radius-control : 10px; --radius-card: 16px; --radius-pill: 9999px;
+--elevation-card : 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+--motion-hover   : 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">✦ Cinematic Animation Principles</div>
+        No gratuitous infinite spins or continuous bouncing. Motion is strictly anchored to user intent: subtle cursor spotlight following, smooth tab transitions, micro-reveal on scroll, and immediate button feedback. Fully disabled under <code>prefers-reduced-motion</code>.
+      </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- 6. 21st.dev MCP COMPONENT ARCHITECTURE -->
+    <section class="section no-break">
+      <h2 class="section-title">6. Premium UI Component Sourcing via 21st.dev MCP</h2>
+      <p class="section-desc">Identified from connected 21st.dev MCP search to elevate portfolio from generic templates to an award-worthy developer stage:</p>
+      
+      <div class="grid-2">
+        <div class="card">
+          <h4>1. Spotlight Card [id: 2220 / id: 1500]</h4>
+          <p><strong>Usage</strong>: Projects &amp; Capabilities showcase.<br>Dynamic radial gradient spotlight that tracks pointer coordinates, illuminating card borders and surface with high-end refinement without excessive glassmorphism.</p>
+        </div>
+        <div class="card">
+          <h4>2. Floating Dock Navigation [id: 18014 / id: 4878]</h4>
+          <p><strong>Usage</strong>: Site Header / Navigation Island.<br>Centered floating frosted pill with active section indicator, smooth backdrop blur, and seamless mobile drawer response.</p>
+        </div>
+        <div class="card">
+          <h4>3. Project Index &amp; Showcase [id: 30554]</h4>
+          <p><strong>Usage</strong>: Project Archive &amp; Featured Work.<br>High-density, typography-driven project presentation with technology tags, live demo links, and accessible keyboard focus navigation.</p>
+        </div>
+        <div class="card">
+          <h4>4. Dark Grid Capability Console [id: 8712]</h4>
+          <p><strong>Usage</strong>: Engineering Abilities &amp; Stack.<br>Structured dark capability architecture highlighting real problem-solving abilities and stack mastery rather than arbitrary percentage bars.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. EXECUTION ROADMAP -->
+    <section class="section no-break">
+      <h2 class="section-title">7. Step-by-Step Implementation Roadmap</h2>
+      
+      <div class="timeline">
+        <div class="timeline-step">
+          <h4>Phase 1: Design Tokens &amp; Tailwind Engine Setup</h4>
+          <p>Refactor <code>App.css</code> and <code>GlobalStyle.tsx</code> with the new OLED color tokens, Syne/DM Sans/Mono typography stack, and remove cursive font conflicts.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 2: Vector Iconography System</h4>
+          <p>Create clean, scalable SVG vector icons for all tech stacks and services (React, JS, Tailwind, PHP, UI/UX, Performance) replacing all emoji placeholders.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 3: Floating Island Header &amp; Cinematic Hero</h4>
+          <p>Build the floating dock header and the developer stage hero with ambient spotlight aura, "Available for Opportunities" status badge, and elevated portrait container.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 4: Bento About &amp; Engineering Credentials</h4>
+          <p>Transform the About section from stock photo to an authentic engineering Bento with real code achievements and core abilities.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 5: Spotlight Project Showcase</h4>
+          <p>Implement the spotlight hover cards for Zain's 3 real projects with high-contrast typography, tech badges, and direct live preview links.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 6: Technical Stack &amp; Capabilities Overhaul</h4>
+          <p>Re-architect Skills and Services into categorized engineering domain blocks with interactive micro-hover feedback.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 7: High-Conversion Contact Console &amp; Footer</h4>
+          <p>Implement an interactive state machine for EmailJS with smooth inline validation and success messaging. Finalize the minimalist developer colophon.</p>
+        </div>
+        <div class="timeline-step">
+          <h4>Phase 8: Rigorous Verification &amp; Responsive Testing</h4>
+          <p>Perform complete TypeScript build verification, mobile responsive checks down to 375px, and WCAG text contrast audits.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER NOTE -->
+    <div style="margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 11.5px;">
+      <div>Document generated for Zainuddin Sharf Kagzi Portfolio Review</div>
+      <div>Confidential &amp; Proprietary • 2026</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
+
