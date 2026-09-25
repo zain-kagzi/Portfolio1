@@ -1,75 +1,47 @@
-import React from "react";
 import { useApp } from "../context/useApp";
-import {
-  IconGitHub,
-  IconLinkedIn,
-  IconInstagram,
-  IconDiscord,
-  IconSparkle,
-} from "./icons/Icons";
 
-const Newsletter: React.FC = () => {
+const Newsletter = () => {
   const { portfolioData } = useApp();
-  const { footerSocials } = portfolioData;
-
-  const getSocialIcon = (text: string) => {
-    const lower = text.toLowerCase();
-    if (lower.includes("github")) return <IconGitHub size={16} />;
-    if (lower.includes("linkedin")) return <IconLinkedIn size={16} />;
-    if (lower.includes("instagram")) return <IconInstagram size={16} />;
-    if (lower.includes("discord")) return <IconDiscord size={16} />;
-    return <IconSparkle size={14} />;
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+const { footerSocials } = portfolioData;
 
   return (
-    <footer className="py-14 px-4 sm:px-6 lg:px-12 bg-[var(--color-bg)] border-t border-[var(--color-border)]">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-        {/* Brand Colophon */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-1">
-          <div className="font-display font-black text-lg text-white tracking-wider">
-            ZAINUDDIN <span className="text-[var(--color-accent)]">KAGZI</span>
-          </div>
-          <p className="font-mono text-xs text-[var(--color-text-muted)]">
-            Full-Stack Software Developer & UI/UX Specialist
-          </p>
-        </div>
-
-        {/* Social Dock */}
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {footerSocials.map((social, idx) => (
-            <a
-              key={idx}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[var(--radius-control)] bg-[var(--color-surface)] border border-[var(--color-border)] text-xs font-mono text-[var(--color-text-secondary)] hover:text-white hover:border-[var(--color-border-hover)] hover:bg-[var(--color-surface-elevated)] transition-all"
-              aria-label={social.text}
-            >
-              {getSocialIcon(social.text)}
-              <span>{social.text}</span>
-            </a>
-          ))}
-        </div>
-
-        {/* Back to Top & Copyright */}
-        <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-1.5">
-          <button
-            onClick={scrollToTop}
-            className="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1 focus-visible:outline-none"
+    <section
+      className="
+        py-16!
+        px-5! sm:px-8! md:px-12! lg:px-20!
+        bg-[#080808]
+        text-center
+        border-t border-border
+      "
+    >
+      {/* Social Links */}
+      <div className="
+        flex flex-wrap justify-center
+        gap-4 sm:gap-6 md:gap-8
+        mb-8!
+      ">
+        {footerSocials.map((s,i) => (
+          <a
+            key={i}
+            href={s.url}
+            target="_blank"
+            className="relative text-xs font-bold tracking-wide text-muted hover:text-accent after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-accent after:transition-all hover:after:w-full"
           >
-            <span>Back to top</span>
-            <span>↑</span>
-          </button>
-          <p className="font-mono text-xs text-[var(--color-text-muted)]">
-            © {new Date().getFullYear()} Zainuddin Sharf Kagzi. All rights reserved.
-          </p>
-        </div>
+            {s.text}
+          </a>
+        ))}
       </div>
-    </footer>
+
+      {/* Divider */}
+      <div className="border-t border-border pt-6!">
+        <p className="
+          text-xs sm:text-sm
+          text-muted
+        ">
+          © 2026 Zain Kagzi. All Rights Reserved 
+        </p>
+      </div>
+    </section>
   );
 };
 
