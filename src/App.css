@@ -1,29 +1,47 @@
-/* Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Caveat:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap");
-
+/* Design System Typography Imports */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap");
 
 @import "tailwindcss";
 
-
-/* Theme (Tailwind v4 way) */
+/* ✦ PHASE 1: DESIGN SYSTEM TOKENS (Tailwind v4 @theme) */
 @theme {
-  --color-bg: #0d0d0d;
-  --color-bg2: #131313;
-  --color-card: #1a1a1a;
-  --color-border: #2a2a2a;
-  --color-accent: #c6f135;
-  --color-accent2: #a8d120;
-  --color-text: #f0f0f0;
-  --color-muted: #888;
-  --color-white: #fff;
+  /* Surfaces & Hierarchy */
+  --color-bg: #0b0d10;
+  --color-surface: #12151b;
+  --color-surface-elevated: #181d26;
+  --color-border: #242b38;
+  --color-border-subtle: rgba(255, 255, 255, 0.07);
 
+  /* Typography Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  /* Sophisticated Cyber Accent */
+  --color-accent: #c8f135;
+  --color-accent-hover: #b5dc2b;
+  --color-accent-subtle: rgba(200, 241, 53, 0.1);
+  --color-accent-glow: rgba(200, 241, 53, 0.25);
+
+  /* Aliases for graceful migration across existing components */
+  --color-bg2: #12151b;
+  --color-card: #181d26;
+  --color-text: #ffffff;
+  --color-muted: #94a3b8;
+  --color-white: #ffffff;
+
+  /* Typography Families */
   --font-display: "Syne", sans-serif;
-  --font-script: "Caveat", cursive;
   --font-body: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Radii Standards */
+  --radius-control: 10px;
+  --radius-card: 16px;
+  --radius-pill: 9999px;
 }
 
-
-/* Base reset */
+/* Base reset & defaults */
 @layer base {
   *,
   *::before,
@@ -35,37 +53,58 @@
 
   html {
     scroll-behavior: smooth;
+    color-scheme: dark;
   }
 
   body {
-    @apply bg-bg text-text font-body overflow-x-hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
     background: var(--color-accent);
-    color: #000;
+    color: #0b0d10;
+  }
+
+  /* Accessibility: Prefers reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-/* Custom utilities */
+/* Custom Scrollbar */
 @utility scrollbar {
   &::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
   }
   &::-webkit-scrollbar-track {
-    background: var(--color-bg2);
+    background: var(--color-bg);
   }
   &::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 9999px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
     background: var(--color-accent);
-    border-radius: 2px;
   }
 }
 
-/* Animations */
+/* Subtle, Intentional Animations */
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -73,43 +112,32 @@
   }
 }
 
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse-glow {
+@keyframes pulseGlowSubtle {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(198, 241, 53, 0.3);
+    box-shadow: 0 0 15px rgba(200, 241, 53, 0.15);
   }
   50% {
-    box-shadow: 0 0 40px rgba(198, 241, 53, 0.6);
+    box-shadow: 0 0 25px rgba(200, 241, 53, 0.3);
   }
 }
 
-@keyframes float {
+@keyframes pulseSubtle {
   0%, 100% {
-    transform: translateY(0px);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-12px);
+    opacity: 0.4;
   }
 }
 
-/* Tailwind utilities for animations */
 @utility animate-fadeUp {
-  animation: fadeUp 0.6s ease forwards;
-}
-
-@utility animate-spin-slow {
-  animation: spin-slow 6s linear infinite;
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @utility animate-pulse-glow {
-  animation: pulse-glow 2s infinite;
+  animation: pulseGlowSubtle 3s ease-in-out infinite;
 }
 
-@utility animate-float {
-  animation: float 3s ease-in-out infinite;
+@utility animate-status-pulse {
+  animation: pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
